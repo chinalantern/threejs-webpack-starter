@@ -1,20 +1,52 @@
-*
-{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 html,
-body
-{
-    height: 100vh;
-    font-family: 'Poppins';
+body {
+  height: 100vh;
+  font-family: 'Poppins';
+
+  /* ff 3.6+ */
+  background: -moz-radial-gradient(
+    circle at 8% 11%,
+    rgba(238, 130, 238, 1) 0%,
+    rgba(128, 32, 0, 1) 100%
+  );
+
+  /* safari 5.1+,chrome 10+ */
+  background: -webkit-radial-gradient(
+    circle at 8% 11%,
+    rgba(238, 130, 238, 1) 0%,
+    rgba(128, 32, 0, 1) 100%
+  );
+
+  /* opera 11.10+ */
+  background: -o-radial-gradient(
+    circle at 8% 11%,
+    rgba(238, 130, 238, 1) 0%,
+    rgba(128, 32, 0, 1) 100%
+  );
+
+  /* ie 10+ */
+  background: -ms-radial-gradient(
+    circle at 8% 11%,
+    rgba(238, 130, 238, 1) 0%,
+    rgba(128, 32, 0, 1) 100%
+  );
+
+  /* global 92%+ browsers support */
+  background: radial-gradient(
+    circle at 8% 11%,
+    rgba(238, 130, 238, 1) 0%,
+    rgba(128, 32, 0, 1) 100%
+  );
 }
 
-.webgl
-{
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
+.webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
 }
