@@ -156,6 +156,12 @@ const onDocumentMouseMove = (event) => {
 
 document.addEventListener('mousemove', onDocumentMouseMove)
 
+// when window scrolls lets move the sphere
+const updateSphere = (event) => {
+  sphere.position.y = window.scrollY * 0.002
+}
+window.addEventListener('scroll', updateSphere)
+
 const clock = new THREE.Clock()
 
 const tick = () => {
@@ -171,7 +177,7 @@ const tick = () => {
   // finishing up more mouse movement interaction
   sphere.rotation.x += 0.02 * (targetY - sphere.rotation.x)
   sphere.rotation.y += 0.35 * (targetX - sphere.rotation.y)
-  // sphere.rotation.z += -0.05 * (targetY - sphere.rotation.x)
+  //   sphere.position.z += -0.01 * (targetY - sphere.rotation.x)
 
   // Update Orbital Controls
   // controls.update()
