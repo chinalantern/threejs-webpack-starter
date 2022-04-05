@@ -55,9 +55,8 @@ light2.add(pointLight2.position, 'y').min(-3).max(3).step(0.01)
 light2.add(pointLight2, 'intensity').min(0).max(10).step(0.01)
 
 // Add a point light helper to make controling the light easier
-const pointLightHelper2 = new THREE.PointLightHelper(pointLight2, 1)
-
-scene.add(pointLightHelper2)
+// const pointLightHelper2 = new THREE.PointLightHelper(pointLight2, 1)
+// scene.add(pointLightHelper2)
 
 // Light 3
 const pointLight3 = new THREE.PointLight(0x50edb4, 1)
@@ -84,9 +83,8 @@ light3.addColor(light3Color, 'color').onChange(() => {
 })
 
 // Add a point light helper to make controling the light easier
-const pointLightHelper3 = new THREE.PointLightHelper(pointLight3, 1)
-
-scene.add(pointLightHelper3)
+// const pointLightHelper3 = new THREE.PointLightHelper(pointLight3, 1)
+// scene.add(pointLightHelper3)
 
 /**
  * Sizes
@@ -143,13 +141,37 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  * Animate
  */
 
+// Add interaction based on mouse movement
+let mouseX = 0
+let mouseY = 0
+let targetX = 0
+let targetY = 0
+const windowHalfX = window.innerWidth / 2 //we half it to keep the interaction smooth
+const windowHalfY = window.innerHeight / 2
+
+const onDocumentMouseMove = (event) => {
+  mouseX = event.clientX - windowHalfX // mouse cursor when moved on x-axis
+  mouseY = event.clientY - windowHalfY // mouse cursor when moved on y-axis
+}
+
+document.addEventListener('mousemove', onDocumentMouseMove)
+
 const clock = new THREE.Clock()
 
 const tick = () => {
+  // finish up mouse movement interaction
+  targetX = mouseX * 0.001
+  targetY = mouseY * 0.001
+
   const elapsedTime = clock.getElapsedTime()
 
   // Update objects
-  sphere.rotation.y = 0.5 * elapsedTime
+  sphere.rotation.y = 0.125 * elapsedTime
+
+  // finishing up more mouse movement interaction
+  sphere.rotation.x += 0.02 * (targetY - sphere.rotation.x)
+  sphere.rotation.y += 0.35 * (targetX - sphere.rotation.y)
+  // sphere.rotation.z += -0.05 * (targetY - sphere.rotation.x)
 
   // Update Orbital Controls
   // controls.update()
