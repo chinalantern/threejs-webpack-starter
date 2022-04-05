@@ -3,10 +3,14 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 import { FlatShading } from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+
+// Global variables
+// var camera, scene, renderer, light, model
+var model
 
 // Loader
-const textureLoader = new THREE.TextureLoader()
-const normalsTexture = textureLoader.load('textures/normalmap.png')
+const loader = new GLTFLoader()
 
 // Debug
 const gui = new dat.GUI()
@@ -18,20 +22,13 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // Objects
-const geometry = new THREE.SphereBufferGeometry(0.5, 64, 64)
+loader.load('mask.glb', (gltf) => {
+  gltf.scene.scale.set(0.3, 0.3, 0.3)
 
-// Materials
+  model = gltf.scene
 
-const material = new THREE.MeshStandardMaterial()
-material.metalness = 0.0
-material.roughness = 0.0
-
-material.normalMap = normalsTexture
-// material.color = new THREE.Color(4, 158, 244)
-
-// Mesh
-const sphere = new THREE.Mesh(geometry, material)
-scene.add(sphere)
+  scene.add(model)
+})
 
 // Lights 1
 const pointLight = new THREE.PointLight(0xffffff, 0.1)
@@ -156,11 +153,11 @@ const onDocumentMouseMove = (event) => {
 
 document.addEventListener('mousemove', onDocumentMouseMove)
 
-// when window scrolls lets move the sphere
-const updateSphere = (event) => {
-  sphere.position.y = window.scrollY * 0.002
+// when window scrolls lets move the model
+const updatemodel = (event) => {
+  model.position.y = window.scrollY * 0.002
 }
-window.addEventListener('scroll', updateSphere)
+window.addEventListener('scroll', updatemodel)
 
 const clock = new THREE.Clock()
 
@@ -171,13 +168,12 @@ const tick = () => {
 
   const elapsedTime = clock.getElapsedTime()
 
-  // Update objects
-  sphere.rotation.y = 0.125 * elapsedTime
-
   // finishing up more mouse movement interaction
-  sphere.rotation.x += 0.02 * (targetY - sphere.rotation.x)
-  sphere.rotation.y += 0.35 * (targetX - sphere.rotation.y)
-  //   sphere.position.z += -0.01 * (targetY - sphere.rotation.x)
+  if (model) {
+    model.rotation.x += 0.92 * (targetY - model.rotation.x)
+    model.rotation.y += 0.35 * (targetX - model.rotation.y)
+    // model.position.z += 5.01 * (targetY - model.rotation.x)
+  }
 
   // Update Orbital Controls
   // controls.update()
